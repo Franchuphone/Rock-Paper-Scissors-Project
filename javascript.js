@@ -1,32 +1,28 @@
-// Function toget the computer choice
+// Function to get the computer choice
 
 function getComputerChoice() {
 
     // Choose a number between 0 and 1
 
     let number = Math.random();
-    let choice = "";
 
     // Make a triple choice around this number
     // IF less than 0.33 return Rock
 
     if (number <= 0.33) {
-        choice = "Rock";
-        return choice
+        return "ROCK"
     }
 
     // IF less than 0.66 return Paper
 
     else if ((number >= 0.33) && (number <=0.66)) {
-        choice = "Paper";
-        return choice;
+        return "PAPER";
     }
 
     // IF more than 0.66 return Scissors
 
     else {
-        choice = "Scissors";
-        return choice;
+        return "SCISSORS";
     }
 }
 
@@ -34,39 +30,41 @@ function getComputerChoice() {
 
 function getHumanChoice () {
 
-    // Prompt the user of choice
+    // Prompt user for choice
 
     let choice = prompt("Rock or Paper or Scissors?","");
 
-    // Capitalize first letter of human response
+   // If user cancel prompt, stop function
 
-    choice = choice.charAt(0).toUpperCase() + choice.slice(1); 
+    if (choice == null) {
+        return
+    }
 
-    // If choice is Rock or Paper or Scissors return choice
-
-    if (choice === "Rock" || 
-        choice === "Paper" || 
-        choice === "Scissors") {
-            return choice;
-        }
-
-    // ELse propmpt again
-
+    //Else capitalize all the word
+    
     else {
-        alert ("Not a correct value, please use only Rock or Paper or Scissors");
-        return(getHumanChoice())
+        choice = choice.toUpperCase();
+
+        // If choice is Rock or Paper or Scissors return choice
+
+        if (choice === "ROCK" || 
+            choice === "PAPER" || 
+            choice === "SCISSORS") {
+                return choice;
+            }
+
+        // ELse prompt again
+
+        else {
+            alert ("Not a correct value, please use only Rock or Paper or Scissors");
+            return(getHumanChoice())
+        }
     }
 }
 
-// Declare variables for players score
-
-let humanScore = 0;
-let computerScore = 0;
-
-
 // Function to play a single round
 
-function playRound ( humanChoice , computerChoice ) {
+function playRound ( humanChoice , computerChoice , roundNumber) {
 
     // Compare the human choice to computer choice
     // IF human same as computer 
@@ -80,12 +78,12 @@ function playRound ( humanChoice , computerChoice ) {
     }
 
     // Else if human is Rock and computer is Scissors
-    //     Or human is Paper and conputer is Rock
+    //     Or human is Paper and computer is Rock
     //     Or human is Scissors and computer is Paper
 
-    else if (((humanChoice === "Rock") && (computerChoice === "Scissors")) ||
-            ((humanChoice === "Paper") && (computerChoice === "Rock")) ||
-            ((humanChoice === "Scissors") && (computerChoice === "Paper"))) {
+    else if (((humanChoice === "ROCK") && (computerChoice === "SCISSORS")) ||
+            ((humanChoice === "PAPER") && (computerChoice === "ROCK")) ||
+            ((humanChoice === "SCISSORS") && (computerChoice === "PAPER"))) {
 
             //     Increment human score
 
@@ -93,7 +91,8 @@ function playRound ( humanChoice , computerChoice ) {
 
             //     Return Win
 
-            alert (`YOU WIN !!
+            alert (`Round : ${roundNumber}
+                YOU WIN !!
                 Your score : ${humanScore}
                 Computer score : ${computerScore}`);
 
@@ -104,28 +103,59 @@ function playRound ( humanChoice , computerChoice ) {
 
     else {
         computerScore += 1;
-        alert (`YOU LOSE !!
+        alert (`Round ${roundNumber}
+            YOU LOSE !!
             Your score : ${humanScore}
             Computer score : ${computerScore}`);
         }
 }
 
+// Declare variables for players score
+
+let humanScore = 0;
+let computerScore = 0;
+
+//Declare variables for players choices
+
 let humanChoice = "";
 let computerChoice = "";
 
-// Function to play game 5 rounds
+// Declare variable asking player for the number of rounds
 
-for (let i=0 ; i < 5 ; i++) {
+let rounds = +prompt("How many rounds do you want to play?", "") 
 
-    // Allocate variables to the choices functions
+// Play 1 round x times defined by user
+
+for (let i=0 ; i < rounds ; i++) {
+
+    // Allocate choices functions returns to players choice variables
 
     humanChoice = getHumanChoice();
     computerChoice = getComputerChoice();
 
-    playRound (humanChoice,computerChoice)
+    // If user cancel election prompt, stop loop
 
-    // console.log (humanChoice)
-    // console.log (computerChoice)
+    if (humanChoice === undefined) {
+        break;
+    }
+
+    //Else keep playing
+
+    else {
+        playRound (humanChoice,computerChoice,i+1)
+    }
 }
 
+// If users cancel any prompt, say goodbye
 
+if (rounds == 0 || humanChoice === undefined) {
+        alert ("See you soon Space Cowboy !!")
+    }
+    
+// Else display the final score
+
+else {
+    alert (`FINAL SCORE 
+        Your score : ${humanScore}
+        Computer score : ${computerScore}`) ;
+    }
