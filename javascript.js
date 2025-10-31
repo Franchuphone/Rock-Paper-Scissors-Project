@@ -52,8 +52,8 @@ function playOneRound ( humanChoice , computerChoice , roundNumber) {
 
     if ( humanChoice === computerChoice ) {
             alert (`DRAW !!
-            Your score : ${humanScore}
-            Computer score : ${computerScore}`)
+        Your score : ${humanScore}
+        Computer score : ${computerScore}`)
     }
 
     else if (((humanChoice === "ROCK") && (computerChoice === "SCISSORS")) ||
@@ -62,18 +62,18 @@ function playOneRound ( humanChoice , computerChoice , roundNumber) {
 
             humanScore += 1;
             alert (`Round : ${roundNumber}
-                YOU WIN !!
-                Your score : ${humanScore}
-                Computer score : ${computerScore}`);
+        YOU WIN !!
+        Your score : ${humanScore}
+        Computer score : ${computerScore}`);
 
         }
 
     else {
         computerScore += 1;
-        alert (`Round ${roundNumber}
-            YOU LOSE !!
-            Your score : ${humanScore}
-            Computer score : ${computerScore}`);
+        alert (`Round : ${roundNumber}
+        YOU LOSE !!
+        Your score : ${humanScore}
+        Computer score : ${computerScore}`);
         }
 }
 
