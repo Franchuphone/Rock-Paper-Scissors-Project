@@ -1,14 +1,12 @@
 function getComputerChoice() {
-
-    // Using the random math variable to make a pseudo random election
     
-    let number = Math.random();
+    const number = Math.random();
 
-    if (number <= 0.33) {
+    if (number <= (1/3)) {
         return "ROCK"
     }
 
-    else if ((number >= 0.33) && (number <=0.66)) {
+    else if (number >= (2/3)) {
         return "PAPER";
     }
 
@@ -23,7 +21,7 @@ function getHumanChoice () {
 
    // Stops function if click on prompt's cancel button
 
-    if (choice == null) {
+    if (!choice) {
         return
     }
     
@@ -48,10 +46,11 @@ function getHumanChoice () {
     }
 }
 
-function playOneRound ( humanChoice , computerChoice , roundNumber) {
+function playOneRound (roundNumber) {
 
     if ( humanChoice === computerChoice ) {
-            alert (`DRAW !!
+            alert (`Round : ${roundNumber}
+        DRAW !!
         Your score : ${humanScore}
         Computer score : ${computerScore}`)
     }
@@ -99,19 +98,14 @@ for (let i=0 ; i < roundsNumber ; i++) {
     }
 
     else {
-        playOneRound (humanChoice,computerChoice,i+1)
+        playOneRound (i+1)
     }
 }
 
 // Displays goodbye message if any prompt's cancel button is clicked
 // Displays goodbye message also when user don't choose any rounds or choose 0 round
 
-if (roundsNumber == 0 || humanChoice === undefined) {
-        alert ("See you soon Space Cowboy !!")
-    }
-
-else {
+(!roundsNumber || !humanChoice) ? alert ("See you soon Space Cowboy !!") : 
     alert (`FINAL SCORE 
         Your score : ${humanScore}
         Computer score : ${computerScore}`) ;
-    }
