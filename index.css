@@ -1,0 +1,70 @@
+body {
+    text-align: center;
+}
+
+.button,
+button {
+    border-radius: 3rem;
+    border: none;
+    font-weight: bold;
+    font-size: 2rem;
+    width: 15rem;
+    color: slategrey;
+    height: 5rem;
+    margin: auto;
+    margin: 1rem 1rem;
+    background-color: rgb(203, 235, 209);
+}
+
+button:hover {
+    box-shadow: inset 0 0 5px #666565;
+    border: none;
+    transform: scale(1.1);
+    color: black;
+}
+
+div {
+    margin: 0.5rem 1rem;
+}
+
+.container {
+    width: 50%;
+    margin: 2rem auto;
+    border: 4px solid grey;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+
+.ROCK {
+    background-color: rgb(173, 238, 238);
+}
+
+.PAPER {
+    background-color: rgb(229, 172, 151);
+}
+
+.SCISSORS {
+    background-color: rgb(226, 221, 183);
+}
+
+.round {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: slategrey;
+    margin: 0 auto 1rem auto;
+}
+
+.no-border {
+    border: none;
+}
+
+
+#result {
+    font-weight: bold;
+}
+
+#result,
+#human-result,
+#computer-result {
+    font-size: 2rem;
+}
