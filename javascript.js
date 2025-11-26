@@ -112,7 +112,7 @@ function filterIncorrectRounds() {
 function startGame() {
     startButton.addEventListener( "click", () => {
         startButton.remove();
-        round.textContent = "How many rounds you want to play?"
+        round.textContent = "How many rounds do you want to play?"
         createHumanInputBox();
         createExitBtn();
     } );
