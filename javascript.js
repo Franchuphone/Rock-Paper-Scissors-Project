@@ -13,6 +13,13 @@ function getComputerChoice() {
     }
 }
 
+function getHumanChoice() {
+
+    buttons.forEach( ( button ) => {
+        button.addEventListener( "click", handleHumanChoice );
+    } );
+}
+
 function playOneRound( humanChoice, computerChoice ) {
 
     if ( humanChoice === computerChoice ) {
@@ -41,10 +48,9 @@ function displayResults( humanChoice, roundNumber ) {
     document.body.className = `${ humanChoice } `;
     humanResult.textContent = `Your score: ${ humanScore }`;
     computerResult.textContent = `Computer score: ${ computerScore } `;
-
 }
 
-function handleChoice( e ) {
+function handleHumanChoice( e ) {
 
     displayResults( e.target.textContent, roundNumber );
     displayLastRound();
@@ -59,11 +65,12 @@ function displayLastRound() {
         finalRound.style.marginTop = "2rem"
         finalRound.textContent = "Final score !"
         round.parentNode.insertBefore( finalRound, humanResult );
+        document.body.lastElementChild.remove();
         createNewGameBtn();
         hideBtn();
-        // A complement of hiding buttons
+        // Useful if hideBtn removed
         buttons.forEach( ( button ) => {
-            button.removeEventListener( "click", handleChoice );
+            button.removeEventListener( "click", handleHumanChoice );
         } );
     }
 }
@@ -72,41 +79,91 @@ function createNewGameBtn() {
 
     const newGameBtn = document.createElement( "button" );
     newGameBtn.textContent = "New game";
+    newGameBtn.className += "button-green";
     round.parentNode.appendChild( newGameBtn )
     newGameBtn.addEventListener( "click", () => location.reload() )
 }
 
 function hideBtn() {
 
-    buttons.forEach( ( button ) => {
-        button.style.display = "none";
-    } );
+    container.style.visibility = "hidden";
 }
 
-function choiceBtn() {
+function showBtn() {
 
-    buttons.forEach( ( button ) => {
-        button.addEventListener( "click", handleChoice );
-    } );
+    container.style.visibility = "visible";
+}
+
+function startGame() {
+
+    inputBox.remove();
+    inputButton.remove();
+    if ( roundTotal <= 0 ) {
+        round.textContent = "Are you sure you want to play?";
+    } else {
+        round.textContent = "Play by clicking on a button above";
+        showBtn();
+        getHumanChoice();
+    }
+}
+
+function createHumanInputBox() {
+
+    const inputDiv = document.createElement( "div" );
+    inputDiv.className = "container"
+    inputBox.setAttribute( "type", "number" );
+    inputBox.setAttribute( "placeholder", "0" );
+    inputBox.setAttribute( "name", "roundTotal" )
+    inputBox.className = "box round shadow-box"
+    inputBox.style.display = "block"
+    inputButton.setAttribute( "type", "submit" );
+    inputButton.setAttribute( "value", "Play !" );
+    inputButton.setAttribute( "name", "roundTotal" )
+    inputButton.className = "round button button:hover button-green";
+
+    lastDiv.parentElement.appendChild( inputDiv );
+    inputDiv.appendChild( inputBox );
+    inputDiv.appendChild( inputButton );
+    inputBox.focus();
+    inputButton.addEventListener( "click", () => {
+        roundTotal = inputBox.value;
+        startGame();
+    } )
+}
+
+function createExitBtn() {
+
+    const exitBtn = document.createElement( "button" );
+    const exitDiv = document.createElement( "div" );
+    exitBtn.textContent = "End Game";
+    exitBtn.className += "button-green";
+    exitDiv.className = "container"
+    container.parentNode.appendChild( exitDiv )
+    exitDiv.appendChild( exitBtn );
+    exitBtn.addEventListener( "click", () => location.reload() )
 }
 
 let humanScore = 0;
 let computerScore = 0;
 let roundNumber = 1;
-const roundTotal = +prompt( "How many rounds do you want to play?", "" );
+let roundTotal;
 const buttons = document.querySelectorAll( "button" );
 const round = document.querySelector( ".round" );
 const result = document.querySelector( "#result" );
 const humanResult = document.querySelector( "#human-result" );
 const computerResult = document.querySelector( "#computer-result" );
+const startButton = document.querySelector( "#start" )
+const hideButton = document.querySelectorAll( "#hide" );
+const lastDiv = document.querySelector( "div:last-of-type" );
+const inputBox = document.createElement( "input" );
+const inputButton = document.createElement( "input" );
+const container = document.querySelector( ".container" )
 
-
-if ( !roundTotal ) {
-    alert( "See you soon Space Cowboy !!" );
-    createNewGameBtn();
-    hideBtn();
-} else {
-    round.textContent = "Play by clicking on a button above"
-    choiceBtn();
-}
+hideBtn();
+startButton.addEventListener( "click", () => {
+    startButton.remove();
+    round.textContent = "How many rounds?"
+    createHumanInputBox();
+    createExitBtn();
+} );
 
