@@ -65,7 +65,7 @@ function displayLastRound() {
         finalRound.style.marginTop = "2rem"
         finalRound.textContent = "Final score !"
         round.parentNode.insertBefore( finalRound, humanResult );
-        document.body.lastElementChild.remove();
+        removeExitBtn();
         createNewGameBtn();
         hideBtn();
         // Useful if hideBtn removed
@@ -94,17 +94,28 @@ function showBtn() {
     container.style.visibility = "visible";
 }
 
-function startGame() {
+function filterIncorrectRounds() {
 
     inputBox.remove();
     inputButton.remove();
     if ( roundTotal <= 0 ) {
-        round.textContent = "Are you sure you want to play?";
+        round.textContent = "You need to select a correct amount";
+        removeExitBtn();
+        createNewGameBtn();
     } else {
         round.textContent = "Play by clicking on a button above";
         showBtn();
         getHumanChoice();
     }
+}
+
+function startGame() {
+    startButton.addEventListener( "click", () => {
+        startButton.remove();
+        round.textContent = "How many rounds you want to play?"
+        createHumanInputBox();
+        createExitBtn();
+    } );
 }
 
 function createHumanInputBox() {
@@ -127,7 +138,7 @@ function createHumanInputBox() {
     inputBox.focus();
     inputButton.addEventListener( "click", () => {
         roundTotal = inputBox.value;
-        startGame();
+        filterIncorrectRounds();
     } )
 }
 
@@ -141,6 +152,10 @@ function createExitBtn() {
     container.parentNode.appendChild( exitDiv )
     exitDiv.appendChild( exitBtn );
     exitBtn.addEventListener( "click", () => location.reload() )
+}
+
+function removeExitBtn() {
+    document.body.lastElementChild.remove();
 }
 
 let humanScore = 0;
@@ -160,10 +175,5 @@ const inputButton = document.createElement( "input" );
 const container = document.querySelector( ".container" )
 
 hideBtn();
-startButton.addEventListener( "click", () => {
-    startButton.remove();
-    round.textContent = "How many rounds?"
-    createHumanInputBox();
-    createExitBtn();
-} );
+startGame();
 
